@@ -1,6 +1,6 @@
-import mongoose, {Schema} from mongoose
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import mongoose, {Schema} from 'mongoose';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 
 const userSchema = new Schema({
@@ -41,7 +41,7 @@ const userSchema = new Schema({
 
    coverImage: {
      type: String,
-     required: true
+     
    },
 
    watchHistory: [
@@ -50,18 +50,17 @@ const userSchema = new Schema({
        ref: "VIDEO"
     }],
     
-   rfreshTToken: {
+   refreshToken: {
       type: String
    }
 
 }, {timestamps: true})
 
-userSchema.pre("save", async function(next) {
-    if(!this.isMOdified("password")) {
-       return next()
-    }
-    this.password = bcrypt.hash(this.password, 10)
-    next()
+userSchema.pre("save", async function(next){
+   if(!this.isModified("password")) next()
+   
+   this.password = await bcrypt.hash(this.password, 10);
+   next()
 })
 
 userSchema.methods.ispasswordMatch = async function(password) {
@@ -90,4 +89,4 @@ userSchema.methods.generateRefreshToken = function(){
     )
 }
 
-export const USER = mongoose.model("USER", userSchema)
+export const User = mongoose.model("User", userSchema)
