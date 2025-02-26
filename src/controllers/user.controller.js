@@ -150,7 +150,7 @@ const loginUser = asyncHandler(async (req, res) => {
          
       )
       
-    })
+})
     
 
 const userLogout = asyncHandler(async(req, res) => {
